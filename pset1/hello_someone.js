@@ -1,2 +1,2 @@
-let nameToPrint= "Muxi";
-let greeting = "It's "
+let nameToPrint = "Takuma" ;
+print ("Hello " + nameToPrint + "!");
