@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="1000" height="1000" id="canvas" style="width: 1000px; height: 1000px;"></canvas>
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width *= dpr, canvas.height *= dpr;
+    ctx.scale(dpr, dpr);
+
+    ctx.arc(
+	400, 
+    400, 
+	60,
+	0, 
+	Math.PI * 2, 
+	false 
+    );
+    ctx.fillStyle = "cyan";
+    ctx.fill();
+
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+</script>
