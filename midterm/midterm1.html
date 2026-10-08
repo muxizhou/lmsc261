@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width *= dpr, canvas.height *= dpr;
+    ctx.scale(dpr, dpr);
+
+    // background
+    ctx.fillStyle = "lightblue";
+    ctx.fillRect(0, 0, w, h);
+
+    // variables
+    const cx = w / 2;
+    const cy = h / 2;
+
+    const radius = w * 0.35;
+
+    const eyeRadius = w * 0.03;
+    const eyeX = cx + radius * 0.3;
+    const eyeY = cy - radius * 0.3;
+
+    const mouthAngle = Math.PI / 6;
+
+    // Pac-Man body
+    ctx.beginPath();
+
+    ctx.arc(
+    cx,
+    cy,
+    radius,
+    mouthAngle,
+    Math.PI * 2 - mouthAngle,
+    false
+    );
+
+    // line bottom of mouth to center
+    ctx.lineTo(cx, cy);
+
+    // line center to top of mouth
+    ctx.closePath();
+
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // eye
+    ctx.beginPath();
+
+    ctx.arc(
+    eyeX,
+    eyeY,
+    eyeRadius,
+    0,
+    Math.PI * 2,
+    true
+    );
+
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+</script>
