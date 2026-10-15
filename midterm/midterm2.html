@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width *= dpr, canvas.height *= dpr;
+    ctx.scale(dpr, dpr);
+
+    // position
+    let packX = w * 0.2;
+    let packY = h / 2;
+
+    // size
+    let radius = w * 0.12;
+    let eyeRadius = w * 0.01;
+
+    // movement speed
+    let xVel = 3;
+
+    // mouth variables
+    let mouthAngle = Math.PI / 7;
+    let mouthVel = 0.02;
+
+    // draw PacMan
+    function packDraw(cx, cy){
+
+        // PacMan body
+        ctx.beginPath();
+
+        if(xVel > 0){
+
+        ctx.arc(
+        cx,
+        cy,
+        radius,
+        mouthAngle,
+        Math.PI * 2 - mouthAngle,
+        false);
+    }
+    else{
+
+    ctx.arc(
+        cx,
+        cy,
+        radius,
+        Math.PI + mouthAngle,
+        Math.PI - mouthAngle,
+        false);
+    }
+
+        ctx.lineTo(cx, cy);
+        ctx.closePath();
+
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // eye
+        let eyeX = cx + radius * 0.3;
+        let eyeY = cy - radius * 0.3;
+
+        // draw eye
+        ctx.beginPath();
+
+        ctx.arc(
+            eyeX,
+            eyeY,
+            eyeRadius,
+            0,
+            Math.PI * 2,
+            true
+        );
+
+        ctx.fillStyle = "black";
+        ctx.fill();
+    }
+
+    // draw canvas
+    function draw(){
+
+        ctx.fillStyle = "lightblue";
+        ctx.fillRect(0, 0, w, h);
+
+        packDraw(packX, packY);
+    }
+
+
+    // animation
+    function tick(){
+
+        // move PacMan
+        packX += xVel;
+
+        if(packX >= w - radius){
+            xVel = xVel * -1;
+        }
+
+        if(packX <= radius){
+            xVel = xVel * -1;
+        }
+
+        // mouth size
+        mouthAngle += mouthVel;
+
+        if(mouthAngle >= Math.PI / 4){
+            mouthVel = mouthVel * -1;
+        }
+
+        if(mouthAngle <= Math.PI / 20){
+            mouthVel = mouthVel * -1;
+        }
+
+        draw();
+
+        requestAnimationFrame(tick);
+    }
+
+    tick();
+</script>
